@@ -1,11 +1,15 @@
 import mongoose from 'mongoose';
 
+import { getEnvVar } from '../utils/getEnvVar.js';
+
+const dbHost = getEnvVar('DB_HOST');
+
 export const initMongoDB = async () => {
   try {
-    await mongoose.connect(
-      'mongodb+srv://Bogdan:<db_password>@cluster0.vhd27.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    );
+    await mongoose.connect(dbHost);
+    console.log('Mongo connection successfully');
   } catch (error) {
-    console.log(error);
+    console.log(`Error connection Mongo ${error.message}`);
+    throw error;
   }
 };
