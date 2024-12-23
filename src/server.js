@@ -6,7 +6,7 @@ import * as movieServices from './services/movies.js';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 
-export const startServer = () => {
+export const setupServer = () => {
   const app = express();
 
   app.use(cors());
@@ -48,7 +48,7 @@ export const startServer = () => {
 
   app.use((req, res) => {
     res.status(404).json({
-      message: `${req.url} not found`,
+      message: `${req.url} Not found`,
     });
   });
 
@@ -61,5 +61,5 @@ export const startServer = () => {
 
   const port = Number(getEnvVar('PORT', 3000));
 
-  app.listen(port, () => console.log(`Server running on ${port} port`));
+  app.listen(port, () => console.log(`Server is running on port ${port} `));
 };

@@ -4,7 +4,7 @@ import { getEnvVar } from '../utils/getEnvVar.js';
 
 const dbHost = getEnvVar('DB_HOST');
 
-export const initMongoDB = async () => {
+export const initMongoConnection = async () => {
   try {
     await mongoose.connect(dbHost);
     console.log('Mongo connection successfully');
