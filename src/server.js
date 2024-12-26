@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import pino from 'pino-http';
 
 import contactRouter from './routers/contacts.js';
 
 import { getEnvVar } from './utils/getEnvVar.js';
+import { logger } from './middlewares/logger.js';
 
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFounderHandler } from './middlewares/notFoundHandler.js';
@@ -14,13 +14,7 @@ export const setupServer = () => {
 
   app.use(cors());
   app.use(express.json());
-  app.use(
-    pino({
-      transport: {
-        target: 'pino-pretty',
-      },
-    }),
-  );
+  app.use(logger);
 
   app.use('/contacts', contactRouter);
 
