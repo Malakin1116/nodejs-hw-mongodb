@@ -6,6 +6,9 @@ import contactRouter from './routers/contacts.js';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFounderHandler } from './middlewares/notFoundHandler.js';
+
 export const setupServer = () => {
   const app = express();
 
@@ -21,18 +24,8 @@ export const setupServer = () => {
 
   app.use('/contacts', contactRouter);
 
-  app.use((req, res) => {
-    res.status(404).json({
-      message: `${req.url} Not found`,
-    });
-  });
-
-  app.use((error, res, req, next) => {
-    res.status(500).json({
-      message: 'Server error',
-      error: error.message,
-    });
-  });
+  app.use('*', notFounderHandler);
+  app.use(errorHandler);
 
   const port = Number(getEnvVar('PORT', 3000));
 
