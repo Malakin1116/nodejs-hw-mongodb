@@ -1,5 +1,5 @@
 export const notFounderHandler = (req, res, next) => {
   res.status(404).json({
-    message: `${req.url} Not found`,
+    message: `${req.url} not found`,
   });
 };
