@@ -18,4 +18,10 @@ contactRouter.put(
   '/:id',
   ctrlWrapper(contactController.upsertContactController),
 );
+
+contactRouter.patch(
+  '/:id',
+  ctrlWrapper(contactController.patchContactController),
+);
+
 export default contactRouter;

@@ -35,18 +35,37 @@ export const addContactController = async (req, res) => {
   const data = await ContactServices.addMovie(req.body);
   res.status(201).json({
     status: 201,
-    message: 'Succesfull add contact',
+    message: 'Successfully created a contact!',
     data,
   });
 };
 
 export const upsertContactController = async (req, res) => {
   const { id } = req.params;
-  const data = await ContactServices.updateContact(id, req.body);
+  const { isNew, data } = await ContactServices.updateContact(id, req.body, {
+    upsert: true,
+  });
+
+  const status = isNew ? 201 : 200;
+
+  res.status(status).json({
+    status,
+    message: 'Successfully patched a contact!',
+    data,
+  });
+};
+
+export const patchContactController = async (req, res) => {
+  const { id } = req.params;
+  const result = await ContactServices.updateContact(id, req.body);
+
+  if (!result) {
+    throw createHttpError(404, `Contact with id ${id} not found`);
+  }
 
   res.json({
     status: 200,
-    message: 'successfully update',
-    data,
+    message: 'Successfully patched a contact!',
+    data: result.data,
   });
 };
