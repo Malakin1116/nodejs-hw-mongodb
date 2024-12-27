@@ -24,4 +24,9 @@ contactRouter.patch(
   ctrlWrapper(contactController.patchContactController),
 );
 
+contactRouter.delete(
+  '/:id',
+  ctrlWrapper(contactController.deleteContactController),
+);
+
 export default contactRouter;
