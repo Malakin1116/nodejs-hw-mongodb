@@ -21,7 +21,7 @@ export const getContactsByIdController = async (req, res, next) => {
   const data = await ContactServices.getContactById(id);
 
   if (!data) {
-    throw createHttpError(404, `Contact with id ${id} not found`);
+    throw createHttpError(404, `Route not found`);
   }
 
   res.json({
@@ -60,7 +60,7 @@ export const patchContactController = async (req, res) => {
   const result = await ContactServices.updateContact(id, req.body);
 
   if (!result) {
-    throw createHttpError(404, `Contact with id ${id} not found`);
+    throw createHttpError(404, `Route not found`);
   }
 
   res.json({
@@ -75,7 +75,7 @@ export const deleteContactController = async (req, res) => {
   const data = await ContactServices.deleteContact({ _id: id });
 
   if (!data) {
-    throw createHttpError(404, `Contact with id ${id} not found`);
+    throw createHttpError(404, `Route not found`);
   }
 
   res.status(204).send();
