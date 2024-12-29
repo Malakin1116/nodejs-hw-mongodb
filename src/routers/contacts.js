@@ -3,7 +3,7 @@ import { Router } from 'express';
 import * as contactController from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
-import { validateBody } from '../utils/validateBody.js';
+import { validateBody } from '../utils/valadateBody.js';
 import {
   contactAddSchema,
   contactUpdateSchema,
@@ -32,6 +32,7 @@ contactRouter.put(
 
 contactRouter.patch(
   '/:id',
+  validateBody(contactUpdateSchema),
   ctrlWrapper(contactController.patchContactController),
 );
 
