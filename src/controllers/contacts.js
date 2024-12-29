@@ -1,12 +1,9 @@
 import * as ContactServices from '../services/contacts.js';
 import createHttpError from 'http-errors';
 
-import { contactAddSchema } from '../validation/contacts.js';
-
 export const getContactsController = async (req, res, next) => {
   try {
     const data = await ContactServices.getContact();
-
     res.json({
       status: 200,
       message: 'Successfully found contacts!',
@@ -19,13 +16,10 @@ export const getContactsController = async (req, res, next) => {
 
 export const getContactsByIdController = async (req, res, next) => {
   const { id } = req.params;
-
   const data = await ContactServices.getContactById(id);
-
   if (!data) {
     throw createHttpError(404, `Contact not found`);
   }
-
   res.json({
     status: 200,
     message: `Successfully found contact with id ${id}`,
@@ -34,15 +28,12 @@ export const getContactsByIdController = async (req, res, next) => {
 };
 
 export const addContactController = async (req, res) => {
-  const validationResult = contactAddSchema.validate(req.body);
-  console.log(validationResult);
-
-  // const data = await ContactServices.addMovie(req.body);
-  // res.status(201).json({
-  //   status: 201,
-  //   message: 'Successfully created a contact!',
-  //   data,
-  // });
+  const data = await ContactServices.addMovie(req.body);
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully created a contact!',
+    data,
+  });
 };
 
 export const upsertContactController = async (req, res) => {
