@@ -16,7 +16,7 @@ contactRouter.get('/', ctrlWrapper(contactController.getContactsController));
 
 contactRouter.get(
   '/:id',
-
+  isValidId,
   ctrlWrapper(contactController.getContactsByIdController),
 );
 
