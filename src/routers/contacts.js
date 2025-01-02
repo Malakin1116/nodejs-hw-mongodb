@@ -29,7 +29,7 @@ contactRouter.post(
 contactRouter.put(
   '/:id',
   isValidId,
-  validateBody(contactUpdateSchema),
+  validateBody(contactAddSchema),
   ctrlWrapper(contactController.upsertContactController),
 );
 
