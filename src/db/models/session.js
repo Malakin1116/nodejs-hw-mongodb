@@ -12,3 +12,5 @@ const sessionsSchema = new Schema(
 );
 
 export const SessionsCollection = model('sessions', sessionsSchema);
+
+// тут в мене питтаня userId: { type: Schema.Types.ObjectId, ref: 'users' },
