@@ -21,6 +21,9 @@ export const getContact = async ({
   if (filter.contactType) {
     contactsQuery.where('contactType').equals(filter.contactType);
   }
+  if (filter.userId) {
+    contactsQuery.where('userId').equals(filter.userId);
+  }
 
   const contactsCount = await ContactCollection.find()
     .merge(contactsQuery)
@@ -39,23 +42,22 @@ export const getContact = async ({
   };
 };
 
-export const getContactById = (id) => ContactCollection.findById(id);
+// export const getContactById = (id) => ContactCollection.findById(id);
+export const getContactWithId = (filter) => ContactCollection.findOne(filter);
 
 export const addContact = (payload) => ContactCollection.create(payload);
 
-export const updateContact = async (_id, payload, options = {}) => {
+export const updateContact = async (filter, payload, options = {}) => {
   const { upsert = false } = options;
-  const result = await ContactCollection.findOneAndUpdate({ _id }, payload, {
+  const result = await ContactCollection.findOneAndUpdate(filter, payload, {
     new: true,
     upsert,
     runValidators: true,
     includeResultMetadata: true,
   });
-
   if (!result || !result.value) return null;
 
   const isNew = Boolean(result.lastErrorObject.upserted);
-
   return {
     isNew,
     data: result.value,
