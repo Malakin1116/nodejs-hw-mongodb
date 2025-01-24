@@ -4,9 +4,9 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 import { parseFilterParams } from '../utils/parseFilterParams.js';
-import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
-import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
-import { getEnvVar } from '../utils/getEnvVar.js';
+// import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+// import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+// import { getEnvVar } from '../utils/getEnvVar.js';
 
 export const getContactsController = async (req, res, next) => {
   try {
@@ -97,60 +97,33 @@ export const deleteContactController = async (req, res) => {
   res.status(204).send();
 };
 
-export const patchStudentController = async (req, res, next) => {
-  const { studentId } = req.params;
-  const photo = req.file;
+// export const patchStudentController = async (req, res, next) => {
+//   const { studentId } = req.params;
+//   const photo = req.file;
 
-  let photoUrl;
+//   let photoUrl;
 
-  if (photo) {
-    photoUrl = await saveFileToUploadDir(photo);
-  }
+//   if (photo) {
+//     if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+//       photoUrl = await saveFileToCloudinary(photo);
+//     } else {
+//       photoUrl = await saveFileToUploadDir(photo);
+//     }
+//   }
 
-  const result = await updateStudent(studentId, {
-    ...req.body,
-    photo: photoUrl,
-  });
+//   const result = ContactServices.updateContact(studentId, {
+//     ...req.body,
+//     photo: photoUrl,
+//   });
 
-  if (!result) {
-    next(createHttpError(404, 'Student not found'));
-    return;
-  }
+//   if (!result) {
+//     next(createHttpError(404, 'Student not found'));
+//     return;
+//   }
 
-  res.json({
-    status: 200,
-    message: `Successfully patched a student!`,
-    data: result.student,
-  });
-};
-
-export const patchStudentController = async (req, res, next) => {
-  const { studentId } = req.params;
-  const photo = req.file;
-
-  let photoUrl;
-
-  if (photo) {
-    if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
-      photoUrl = await saveFileToCloudinary(photo);
-    } else {
-      photoUrl = await saveFileToUploadDir(photo);
-    }
-  }
-
-  const result = await updateStudent(studentId, {
-    ...req.body,
-    photo: photoUrl,
-  });
-
-  if (!result) {
-    next(createHttpError(404, 'Student not found'));
-    return;
-  }
-
-  res.json({
-    status: 200,
-    message: `Successfully patched a student!`,
-    data: result.student,
-  });
-};
+//   res.json({
+//     status: 200,
+//     message: `Successfully patched a student!`,
+//     data: result.student,
+//   });
+// };
