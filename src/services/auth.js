@@ -13,6 +13,8 @@ import { TEMPLATES_DIR } from '../constants/index.js';
 import { getEnvVar } from '../utils/getEnvVar.js';
 import jwt from 'jsonwebtoken';
 import { sendEmail } from '../utils/sendMail.js';
+import { SMTP } from '../constants/index.js';
+// import { error } from 'node:console';
 
 const emailTemplatePath = path.join(TEMPLATES_DIR, 'verify-email.html');
 const emailTomplateSource = await readFile(emailTemplatePath, 'utf-8');
@@ -44,6 +46,7 @@ export const registerUser = async (payload) => {
   });
 
   const varifyEmail = {
+    from: `"Your App Name" <${getEnvVar(SMTP.SMTP_FROM)}>`,
     to: email,
     subject: 'Verify email',
     html,
@@ -100,6 +103,22 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
 
 export const getSession = (filter) => SessionsCollection.findOne(filter);
 export const getUser = (filter) => UsersCollection.findOne(filter);
+
+export const verify = async (token) => {
+  try {
+    const { email } = jwt.verify(token, jwtSecret);
+    const user = await UsersCollection.findOne({ email });
+    if (!user) {
+      throw createHttpError(401, 'User not found');
+    }
+    await UsersCollection.findByIdAndUpdate(
+      { _id: user._id },
+      { verify: true },
+    );
+  } catch (err) {
+    throw createHttpError(401, err.message);
+  }
+};
 
 // import jwt from 'jsonwebtoken';
 

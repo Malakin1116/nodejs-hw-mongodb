@@ -4,6 +4,7 @@ import {
   loginUser,
   registerUser,
   refreshUsersSession,
+  verify,
 } from '../services/auth.js';
 
 // import { requestResetToken } from '../services/auth.js';
@@ -63,6 +64,16 @@ export const refreshUserSessionController = async (req, res) => {
     data: {
       accessToken: session.accessToken,
     },
+  });
+};
+
+export const verifyController = async (req, res) => {
+  const { token } = req.query;
+  await verify(token);
+
+  res.json({
+    status: 200,
+    message: 'Email verified',
   });
 };
 
