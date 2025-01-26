@@ -1,7 +1,5 @@
 import createHttpError from 'http-errors';
 
-// import { SessionsCollection } from '../db/models/session.js';
-// import { UsersCollection } from '../db/models/user.js';
 import { getSession, getUser } from '../services/auth.js';
 
 export const authenticate = async (req, res, next) => {
@@ -11,8 +9,7 @@ export const authenticate = async (req, res, next) => {
     return;
   }
   const [bearer, accessToken] = authHeader.split(' ');
-  // const bearer = authHeader.split(' ')[0];
-  // const token = authHeader.split(' ')[1];
+
   if (bearer !== 'Bearer') {
     next(createHttpError(401, 'Auth header should be of type Bearer'));
     return;
