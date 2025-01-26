@@ -64,16 +64,6 @@ export const refreshUserSessionController = async (req, res) => {
   });
 };
 
-// export const requestResetEmailController = async (req, res) => {
-//   const { token } = req.query;
-//   await verify(token);
-
-//   res.json({
-//     status: 200,
-//     message: 'Email verified',
-//   });
-// };
-
 import { requestResetToken } from '../services/auth.js';
 
 export const requestResetEmailController = async (req, res) => {
@@ -85,13 +75,13 @@ export const requestResetEmailController = async (req, res) => {
   });
 };
 
-// import { resetPassword } from '../services/auth.js';
+import { resetPassword } from '../services/auth.js';
 
-// export const resetPasswordController = async (req, res) => {
-//   await resetPassword(req.body);
-//   res.json({
-//     message: 'Password was successfully reset!',
-//     status: 200,
-//     data: {},
-//   });
-// };
+export const resetPasswordController = async (req, res) => {
+  await resetPassword(req.body);
+  res.json({
+    message: 'Password was successfully reset!',
+    status: 200,
+    data: {},
+  });
+};
