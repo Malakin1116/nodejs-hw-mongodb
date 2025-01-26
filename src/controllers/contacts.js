@@ -4,9 +4,9 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 import { parseFilterParams } from '../utils/parseFilterParams.js';
-// import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
-// import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
-// import { getEnvVar } from '../utils/getEnvVar.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
 
 export const getContactsController = async (req, res, next) => {
   try {
@@ -46,8 +46,22 @@ export const getContactsByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
+  const cloudinaryEnable = getEnvVar('CLOUDINARY_ENABLE') === 'true';
+  let photo;
+  if (req.file) {
+    if (cloudinaryEnable) {
+      photo = await saveFileToCloudinary(req.file);
+    } else {
+      photo = await saveFileToUploadDir(req.file);
+    }
+  }
   const { _id: userId } = req.user;
-  const data = await ContactServices.addContact({ ...req.body, userId });
+  const data = await ContactServices.addContact({
+    ...req.body,
+    photo,
+    userId,
+  });
+
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
@@ -96,34 +110,3 @@ export const deleteContactController = async (req, res) => {
   }
   res.status(204).send();
 };
-
-// export const patchStudentController = async (req, res, next) => {
-//   const { studentId } = req.params;
-//   const photo = req.file;
-
-//   let photoUrl;
-
-//   if (photo) {
-//     if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
-//       photoUrl = await saveFileToCloudinary(photo);
-//     } else {
-//       photoUrl = await saveFileToUploadDir(photo);
-//     }
-//   }
-
-//   const result = ContactServices.updateContact(studentId, {
-//     ...req.body,
-//     photo: photoUrl,
-//   });
-
-//   if (!result) {
-//     next(createHttpError(404, 'Student not found'));
-//     return;
-//   }
-
-//   res.json({
-//     status: 200,
-//     message: `Successfully patched a student!`,
-//     data: result.student,
-//   });
-// };

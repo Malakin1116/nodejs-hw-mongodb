@@ -1,24 +1,24 @@
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
-import Handlebars from 'handlebars';
-import path from 'node:path';
-import { readFile } from 'node:fs/promises';
+// import Handlebars from 'handlebars';
+// import path from 'node:path';
+// import { readFile } from 'node:fs/promises';
 // import fs from 'node:fs/promises';
 
 import { UsersCollection } from '../db/models/user.js';
 import { randomBytes } from 'crypto';
 import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
-import { TEMPLATES_DIR } from '../constants/index.js';
+// import { TEMPLATES_DIR } from '../constants/index.js';
 import { getEnvVar } from '../utils/getEnvVar.js';
 import jwt from 'jsonwebtoken';
-import { sendEmail } from '../utils/sendMail.js';
-import { SMTP } from '../constants/index.js';
+// import { sendEmail } from '../utils/sendMail.js';
+// import { SMTP } from '../constants/index.js';
 // import { error } from 'node:console';
 
-const emailTemplatePath = path.join(TEMPLATES_DIR, 'verify-email.html');
-const emailTomplateSource = await readFile(emailTemplatePath, 'utf-8');
-const appDomain = getEnvVar('APP_DOMAIN');
+// const emailTemplatePath = path.join(TEMPLATES_DIR, 'verify-email.html');
+// const emailTomplateSource = await readFile(emailTemplatePath, 'utf-8');
+// const appDomain = getEnvVar('APP_DOMAIN');
 const jwtSecret = getEnvVar('JWT_SECRET');
 
 const createSession = (userId) => {
@@ -38,21 +38,19 @@ export const registerUser = async (payload) => {
   if (user) throw createHttpError(409, 'Email in use');
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-  const { email } = payload;
-  const template = Handlebars.compile(emailTomplateSource);
-  const token = jwt.sign({ email }, jwtSecret, { expiresIn: '1h' });
-  const html = template({
-    link: `${appDomain}/auth/verify?token=${token}`,
-  });
-
-  const varifyEmail = {
-    from: `"Your App Name" <${getEnvVar(SMTP.SMTP_FROM)}>`,
-    to: email,
-    subject: 'Verify email',
-    html,
-  };
-
-  sendEmail(varifyEmail);
+  // const { email } = payload;
+  // const template = Handlebars.compile(emailTomplateSource);
+  // const token = jwt.sign({ email }, jwtSecret, { expiresIn: '1h' });
+  // const html = template({
+  //   link: `${appDomain}/auth/verify?token=${token}`,
+  // });
+  // const varifyEmail = {
+  //   from: `"Your App Name" <${getEnvVar(SMTP.SMTP_FROM)}>`,
+  //   to: email,
+  //   subject: 'Verify email',
+  //   html,
+  // };
+  // sendEmail(varifyEmail);
 
   return await UsersCollection.create({
     ...payload,
