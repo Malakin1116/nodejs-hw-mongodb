@@ -8,6 +8,14 @@ import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { getEnvVar } from '../utils/getEnvVar.js';
 
+const processPhoto = async (file) => {
+  const cloudinaryEnable = getEnvVar('CLOUDINARY_ENABLE') === 'true';
+  if (!file) return null;
+  return cloudinaryEnable
+    ? await saveFileToCloudinary(file)
+    : await saveFileToUploadDir(file);
+};
+
 export const getContactsController = async (req, res, next) => {
   try {
     const { page, perPage } = parsePaginationParams(req.query);
@@ -46,15 +54,7 @@ export const getContactsByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
-  const cloudinaryEnable = getEnvVar('CLOUDINARY_ENABLE') === 'true';
-  let photo;
-  if (req.file) {
-    if (cloudinaryEnable) {
-      photo = await saveFileToCloudinary(req.file);
-    } else {
-      photo = await saveFileToUploadDir(req.file);
-    }
-  }
+  const photo = await processPhoto(req.file);
   const { _id: userId } = req.user;
   const data = await ContactServices.addContact({
     ...req.body,
@@ -70,11 +70,12 @@ export const addContactController = async (req, res) => {
 };
 
 export const upsertContactController = async (req, res) => {
+  const photo = await processPhoto(req.file);
   const { id } = req.params;
   const { _id: userId } = req.user;
   const { isNew, data } = await ContactServices.updateContact(
-    id,
-    { ...req.body, userId },
+    { _id: id, userId },
+    { ...req.body, photo, userId },
     { upsert: true },
   );
   const status = isNew ? 201 : 200;
@@ -86,9 +87,13 @@ export const upsertContactController = async (req, res) => {
 };
 
 export const patchContactController = async (req, res) => {
+  const photo = await processPhoto(req.file);
   const { id: _id } = req.params;
   const { _id: userId } = req.user;
-  const result = await ContactServices.updateContact({ _id, userId }, req.body);
+  const result = await ContactServices.updateContact(
+    { _id, userId },
+    { ...req.body, photo },
+  );
 
   if (!result) {
     throw createHttpError(404, `Contact not found`);
