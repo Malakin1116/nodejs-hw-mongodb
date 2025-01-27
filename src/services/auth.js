@@ -44,10 +44,6 @@ export const loginUser = async (payload) => {
     throw createHttpError(401, 'Unauthorized');
   }
 
-  if (!user.verify) {
-    throw createHttpError(401, 'Email not verfied');
-  }
-
   const isEqual = await bcrypt.compare(payload.password, user.password);
   if (!isEqual) {
     throw createHttpError(401, 'Unauthorized');
