@@ -42,7 +42,6 @@ export const getContact = async ({
   };
 };
 
-// export const getContactById = (id) => ContactCollection.findById(id);
 export const getContactWithId = (filter) => ContactCollection.findOne(filter);
 
 export const addContact = (payload) => ContactCollection.create(payload);
