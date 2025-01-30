@@ -1,4 +1,5 @@
 import { THIRTY_DAYS } from '../constants/index.js';
+import { generateOAuthUrl } from '../utils/googleOAuth2.js';
 import {
   logoutUser,
   loginUser,
@@ -57,6 +58,7 @@ export const refreshUserSessionController = async (req, res) => {
     refreshToken: req.cookies.refreshToken,
   });
   setupSession(res, session);
+  console.log('hello');
   res.json({
     status: 200,
     message: 'Successfully refreshed a session!',
@@ -81,5 +83,17 @@ export const resetPasswordController = async (req, res) => {
     message: 'Password has been successfully reset.',
     status: 200,
     data: {},
+  });
+};
+
+export const getGoogleOAthUrlController = async (req, res) => {
+  const url = generateOAuthUrl();
+
+  res.json({
+    status: 200,
+    message: 'Successfully get Google OAth url',
+    data: {
+      url,
+    },
   });
 };

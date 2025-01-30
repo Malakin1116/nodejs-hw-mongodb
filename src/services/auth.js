@@ -134,7 +134,7 @@ export const resetPassword = async (payload) => {
     _id: entries.sub,
   });
   if (!user) {
-    throw createHttpError(404, 'User not found');
+    throw createHttpError(404, 'Users not found');
   }
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
   await UsersCollection.updateOne(
