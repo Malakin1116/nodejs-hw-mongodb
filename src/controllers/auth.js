@@ -84,3 +84,13 @@ export const resetPasswordController = async (req, res) => {
     data: {},
   });
 };
+
+export const getGoogleOAthUrlController = async (req, res) => {
+  res.json({
+    status: 200,
+    message: 'Successfully get Google OAth url',
+    data: {
+      url,
+    },
+  });
+};

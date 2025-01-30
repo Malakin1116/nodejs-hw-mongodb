@@ -7,6 +7,7 @@ import {
   loginUserController,
   logoutUserController,
   refreshUserSessionController,
+  getGoogleOAthUrlController,
 } from '../controllers/auth.js';
 
 import { validateBody } from '../middlewares/validateBody.js';
@@ -43,5 +44,6 @@ authRouter.post(
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+authRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAthUrlController));
 
 export default authRouter;
