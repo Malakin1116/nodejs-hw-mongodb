@@ -1,4 +1,5 @@
 import { THIRTY_DAYS } from '../constants/index.js';
+import { generateOAuthUrl } from '../utils/googleOAuth2.js';
 import {
   logoutUser,
   loginUser,
@@ -86,6 +87,8 @@ export const resetPasswordController = async (req, res) => {
 };
 
 export const getGoogleOAthUrlController = async (req, res) => {
+  const url = generateOAuthUrl();
+
   res.json({
     status: 200,
     message: 'Successfully get Google OAth url',

@@ -33,7 +33,6 @@ authRouter.post(
 );
 authRouter.post('/logout', ctrlWrapper(logoutUserController));
 authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
-
 authRouter.post(
   '/request-reset-email',
   validateBody(requestResetEmailSchema),
@@ -44,6 +43,7 @@ authRouter.post(
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+
 authRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAthUrlController));
 
 export default authRouter;
