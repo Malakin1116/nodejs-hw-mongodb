@@ -57,6 +57,7 @@ export const refreshUserSessionController = async (req, res) => {
     refreshToken: req.cookies.refreshToken,
   });
   setupSession(res, session);
+  console.log('hello');
   res.json({
     status: 200,
     message: 'Successfully refreshed a session!',

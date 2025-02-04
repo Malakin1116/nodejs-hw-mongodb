@@ -11,6 +11,11 @@ const usersSchema = new Schema(
       unique: true,
     },
     password: { type: String, required: true },
+    verify: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
   },
 
   { timestamps: true, versionKey: false },
