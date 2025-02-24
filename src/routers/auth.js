@@ -62,13 +62,6 @@ authRouter.post(
   validateBody(googleOAuthSchema),
   ctrlWrapper(loginWithGoogleController),
 );
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 authRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAthUrlController));
 
 export default authRouter;
