@@ -21,12 +21,6 @@ import { resetPasswordSchema } from '../validation/auth.js';
 import { resetPasswordController } from '../controllers/auth.js';
 import { googleOAuthSchema } from '../validation/auth.js';
 
-import { googleOAuthSchema } from '../validation/auth.js';
-import { loginWithGoogleController } from '../controllers/auth.js';
-
-import { googleOAuthSchema } from '../validation/auth.js';
-import { loginWithGoogleController } from '../controllers/auth.js';
-
 const authRouter = Router();
 
 authRouter.post(

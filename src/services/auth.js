@@ -148,8 +148,6 @@ export const resetPassword = async (payload) => {
   await SessionsCollection.deleteMany({ userId: user._id });
 };
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 export const loginOrRegisterWithGoogle = async (code) => {
   const loginTicket = await validateCode(code);
   const payload = loginTicket.getPayload();
@@ -172,9 +170,3 @@ export const loginOrRegisterWithGoogle = async (code) => {
     ...sessionData,
   });
 };
-=======
-export const loginOrRegisterWithGoogle = async (code) => {};
->>>>>>> Stashed changes
-=======
-export const loginOrRegisterWithGoogle = async (code) => {};
->>>>>>> Stashed changes
