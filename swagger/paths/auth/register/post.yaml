@@ -30,7 +30,7 @@ requestBody:
           password:
             description: User's password
             type: string
-            example: 'StrongP@ssw0rd'
+            example: '1234'
 responses:
   '201':
     description: User successfully created

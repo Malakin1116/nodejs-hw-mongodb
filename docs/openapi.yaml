@@ -12,7 +12,7 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: https://nodejs-hw-mongodb-1-vszm.onrender.com/
+  - url: https://nodejs-hw-mongodb-1-vszm.onrender.com
   - url: http://localhost:3000
 paths:
   /auth/register:

@@ -1,22 +1,19 @@
 tags:
   - Contacts
-summary: Update contact by id
-operationId: updateContact
-description: 'Update contact by id'
+summary: Create contact
+operationId: createContact
+description: 'This endpoint creates a new contact for the authenticated user. The contact can include name, phone number, email, contact type, and an optional photo.'
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: contactId
-    required: true
-    schema:
-      type: string
-      example: '67a491449472649b839394df'
 requestBody:
   content:
     multipart/form-data:
       schema:
         type: object
+        required:
+          - name
+          - phoneNumber
+          - contactType
         properties:
           name:
             description: "Contact's name"
@@ -47,8 +44,8 @@ requestBody:
             type: string
             format: binary
 responses:
-  '200':
-    description: 'Contact successfully updated'
+  '201':
+    description: Creates a student
     content:
       application/json:
         schema:
@@ -60,18 +57,16 @@ responses:
           properties:
             status:
               type: integer
-              example: 200
+              example: 201
             message:
               type: string
-              example: 'Successfully patched a contact!'
+              example: Successfully created a student!
             data:
               type: object
-              $ref: '../../../components/schemas/contact.yaml'
+              $ref: ../../components/schemas/contact.yaml
   '400':
-    $ref: '../../../components/responses/400.yaml'
+    $ref: ../../components/responses/400.yaml
   '401':
-    $ref: '../../../components/responses/401.yaml'
-  '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: ../../components/responses/401.yaml
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: ../../components/responses/500.yaml

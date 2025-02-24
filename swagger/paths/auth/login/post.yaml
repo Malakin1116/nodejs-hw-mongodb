@@ -23,7 +23,7 @@ requestBody:
           password:
             description: "User's password"
             type: string
-            example: 'MyS3cur3P@ss'
+            example: '1234'
 responses:
   '200':
     description: 'Successfully logged in a user'
