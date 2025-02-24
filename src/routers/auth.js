@@ -28,18 +28,23 @@ authRouter.post(
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );
+
 authRouter.post(
   '/login',
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
+
 authRouter.post('/logout', ctrlWrapper(logoutUserController));
+
 authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+
 authRouter.post(
-  '/request-reset-email',
+  '/send-reset-email',
   validateBody(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
 );
+
 authRouter.post(
   '/reset-pwd',
   validateBody(resetPasswordSchema),
