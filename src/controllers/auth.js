@@ -7,6 +7,7 @@ import {
   refreshUsersSession,
   requestResetToken,
   resetPassword,
+  loginOrRegisterWithGoogle,
 } from '../services/auth.js';
 
 const setupSession = (res, session) => {
@@ -94,6 +95,20 @@ export const getGoogleOAthUrlController = async (req, res) => {
     message: 'Successfully get Google OAth url',
     data: {
       url,
+    },
+  });
+};
+
+export const loginWithGoogleController = async (req, res) => {
+  const { code } = req.body;
+  const session = await loginOrRegisterWithGoogle(code);
+
+  setupSession(res, session);
+  res.json({
+    status: 200,
+    message: 'Successfully loginWithGoogleOAuth!',
+    data: {
+      accessToken: session.accessToken,
     },
   });
 };
