@@ -1,4 +1,5 @@
 import { THIRTY_DAYS } from '../constants/index.js';
+import { generateOAuthUrl } from '../utils/googleOAuth2.js';
 import {
   logoutUser,
   loginUser,
@@ -6,6 +7,7 @@ import {
   refreshUsersSession,
   requestResetToken,
   resetPassword,
+  loginOrRegisterWithGoogle,
 } from '../services/auth.js';
 
 const setupSession = (res, session) => {
@@ -82,5 +84,44 @@ export const resetPasswordController = async (req, res) => {
     message: 'Password has been successfully reset.',
     status: 200,
     data: {},
+  });
+};
+
+export const getGoogleOAthUrlController = async (req, res) => {
+  const url = generateOAuthUrl();
+
+  res.json({
+    status: 200,
+    message: 'Successfully get Google OAth url',
+    data: {
+      url,
+    },
+  });
+};
+
+export const loginWithGoogleController = async (req, res) => {
+  const { code } = req.body;
+  const session = await loginOrRegisterWithGoogle(code);
+
+  setupSession(res, session);
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+  res.json({
+    status: 200,
+    message: 'Successfully loginWithGoogleOAuth!',
+    data: {
+      accessToken: session.accessToken,
+    },
+=======
+=======
+>>>>>>> Stashed changes
+
+  res.json({
+    status: 200,
+    message: 'Successfully logged with Google OAuth',
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   });
 };

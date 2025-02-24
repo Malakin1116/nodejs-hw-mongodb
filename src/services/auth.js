@@ -14,6 +14,10 @@ import { getEnvVar } from '../utils/getEnvVar.js';
 import jwt from 'jsonwebtoken';
 import { SMTP } from '../constants/index.js';
 import { sendEmail } from '../utils/sendMail.js';
+import {
+  getUsernameFromGoogleYokenPayload,
+  validateCode,
+} from '../utils/googleOAuth2.js';
 const jwtSecret = getEnvVar('JWT_SECRET');
 
 const createSession = (userId) => {
@@ -143,3 +147,34 @@ export const resetPassword = async (payload) => {
   );
   await SessionsCollection.deleteMany({ userId: user._id });
 };
+
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+export const loginOrRegisterWithGoogle = async (code) => {
+  const loginTicket = await validateCode(code);
+  const payload = loginTicket.getPayload();
+
+  let user = await UsersCollection.findOne({ email: payload.email });
+  if (!user) {
+    const username = getUsernameFromGoogleYokenPayload(payload);
+    const password = await bcrypt.hash(randomBytes(10).toString('base64'), 10);
+    user = await UsersCollection.create({
+      email: payload.email,
+      name: username,
+      password,
+    });
+  }
+
+  const sessionData = createSession();
+
+  return SessionsCollection.create({
+    userId: user._id,
+    ...sessionData,
+  });
+};
+=======
+export const loginOrRegisterWithGoogle = async (code) => {};
+>>>>>>> Stashed changes
+=======
+export const loginOrRegisterWithGoogle = async (code) => {};
+>>>>>>> Stashed changes
