@@ -104,24 +104,12 @@ export const loginWithGoogleController = async (req, res) => {
   const session = await loginOrRegisterWithGoogle(code);
 
   setupSession(res, session);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
   res.json({
     status: 200,
     message: 'Successfully loginWithGoogleOAuth!',
     data: {
       accessToken: session.accessToken,
     },
-=======
-=======
->>>>>>> Stashed changes
-
-  res.json({
-    status: 200,
-    message: 'Successfully logged with Google OAuth',
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
   });
 };

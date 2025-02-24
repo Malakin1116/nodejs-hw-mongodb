@@ -21,12 +21,6 @@ import { resetPasswordSchema } from '../validation/auth.js';
 import { resetPasswordController } from '../controllers/auth.js';
 import { googleOAuthSchema } from '../validation/auth.js';
 
-import { googleOAuthSchema } from '../validation/auth.js';
-import { loginWithGoogleController } from '../controllers/auth.js';
-
-import { googleOAuthSchema } from '../validation/auth.js';
-import { loginWithGoogleController } from '../controllers/auth.js';
-
 const authRouter = Router();
 
 authRouter.post(
@@ -62,13 +56,6 @@ authRouter.post(
   validateBody(googleOAuthSchema),
   ctrlWrapper(loginWithGoogleController),
 );
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 authRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAthUrlController));
 
 export default authRouter;
